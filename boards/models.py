@@ -2,6 +2,7 @@ import uuid
 from django.core.urlresolvers import reverse
 from django.db import models
 from django.conf import settings
+from django.utils.functional import SimpleLazyObject
 
 
 class Board(models.Model):
