@@ -1,0 +1,4 @@
+django=1.10
+django-jinja==2.2.2
+djangorestframework==3.6.2
+jinja2==2.9.5

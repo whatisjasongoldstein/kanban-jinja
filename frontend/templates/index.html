@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>All Kanban Boards</h1>
+    <ul>
+        {% for board in boards %}
+            <li><a href="{{ board.get_absolute_url() }}">{{ board.name }}</a></li>
+        {% endfor %}
+    </ul>
+{% endblock %}

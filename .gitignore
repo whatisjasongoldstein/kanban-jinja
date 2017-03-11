@@ -1,0 +1,6 @@
+/node_modules/
+/bower_components/
+db.sqlite3
+__pycache__
+/assets/
+/static/
