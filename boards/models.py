@@ -29,6 +29,9 @@ class State(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        ordering = ('position', )
+
 
 class Task(models.Model):
     name = models.CharField(max_length=512)
@@ -44,4 +47,7 @@ class Task(models.Model):
 
     def __str__(self):
         return self.name
+
+    class Meta:
+        ordering = ('position', )
 
