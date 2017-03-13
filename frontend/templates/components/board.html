@@ -1,17 +1,17 @@
 <h1>{{ board.name }}</h1>
 <ul class="c-board">
+    {% for state in board.state_set %}
     <li class="c-column">
-        <h2>List Name</h2>
+        <h2>{{ state.name }}</h2>
         <ul class="items">
+            {% for task in state.task_set %}
             <li>
-                <div class="task">Item</div>
+                <div class="task">
+                    {{ task.name }}
+                </div>
             </li>
-            <li>
-                <div class="task">Item</div>
-            </li>
-            <li>
-                <div class="task">Item</div>
-            </li>
+            {% endfor %}
         </ul>
     </li>
+    {% endfor %}
 </ul>

@@ -12,7 +12,6 @@ class BoardSerializer(serializers.ModelSerializer):
 
 
 class TaskSerializer(serializers.ModelSerializer):
-    url = serializers.CharField(source='get_absolute_url', read_only=True)
 
     class Meta:
         model = Task
@@ -26,11 +25,11 @@ class TaskSerializer(serializers.ModelSerializer):
 
 class StateSerializer(serializers.ModelSerializer):
     url = serializers.CharField(source='get_absolute_url', read_only=True)
-    tasks = TaskSerializer(many=True, read_only=True)
+    task_set = TaskSerializer(many=True, read_only=True)
 
     class Meta:
         model = State
-        fields = ("id", 'url', "board", "name", "position", "tasks", )
+        fields = ("id", 'url', "board", "name", "position", "task_set", )
 
 
 class FullBoardSerializer(serializers.ModelSerializer):
@@ -40,4 +39,4 @@ class FullBoardSerializer(serializers.ModelSerializer):
     class Meta:
         model = Board
         fields = ("name", "id", "url", "state_set", )
-        depth = 2
+        depth = 3
