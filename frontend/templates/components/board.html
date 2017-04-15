@@ -1,12 +1,12 @@
-<h1>{{ board.name }}</h1>
+<h1 class="c-board-name">{{ board.name }}</h1>
 <ul class="c-board">
-    {% for state in board.state_set %}
+    {% for state in board.states %}
     <li class="c-column">
         <h2>{{ state.name }}</h2>
         <ul class="items">
             {% for task in state.task_set %}
             <li>
-                <div class="task">
+                <div class="c-card">
                     {{ task.name }}
                 </div>
             </li>

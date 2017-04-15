@@ -34,9 +34,9 @@ class StateSerializer(serializers.ModelSerializer):
 
 class FullBoardSerializer(serializers.ModelSerializer):
     url = serializers.CharField(source='get_absolute_url', read_only=True)
-    state_set = StateSerializer(many=True)
+    states = StateSerializer(many=True, source='state_set')
 
     class Meta:
         model = Board
-        fields = ("name", "id", "url", "state_set", )
+        fields = ("name", "id", "url", "states")
         depth = 3

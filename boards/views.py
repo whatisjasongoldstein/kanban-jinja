@@ -25,6 +25,6 @@ def index(request):
 def board(request, board_id):
     board = get_object_or_404(Board, id=board_id)
     return render(request, "app-board.html", {
-        "board": FullBoardSerializer(board),
-        "all": render_json(FullBoardSerializer(board)),
+        "board": FullBoardSerializer(board).data,
+        "all": FullBoardSerializer(board).data,
     })
