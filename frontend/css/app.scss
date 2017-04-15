@@ -19,7 +19,7 @@ body {
     border: 1px solid #eee;
     border-radius: 5px;
     padding: 1rem;
-    margin: 0 1rem;
+    margin: 0 0.25rem;
     flex-grow: 1;
     justify-content: space-between;
 
@@ -59,14 +59,40 @@ body {
     top: 0;
     left: 0;
     &:hover {
-        left: -0.2rem;
-        top: -0.2rem;
-        box-shadow: 0.2rem 0.2rem 0.25rem rgba(0,0,0,0.25);
+        left: -0.1rem;
+        top: -0.1rem;
+        box-shadow: 0.2rem 0.2rem 0.5rem rgba(0,0,0,0.25);
     }
     &.is-active {
         box-shadow: 0.25rem 0.25rem 1rem rgba(0,0,0,0.5);
-        left: -.5rem;
-        top: -.5rem;
+        left: -.25rem;
+        top: -.25rem;
         transform: scale(1.1) rotate(1deg);
+    }
+
+    p {
+        margin: 0.5em 0;
+    }
+}
+
+.c-new-task {
+    width: 90%;
+    margin: 0 auto;
+    max-width: 400px;
+    box-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+    
+    input,
+    textarea {
+        width: 100%;
+        display: block;
+        padding: 0.5rem;
+        border: 1px solid #ccc;
+    }
+
+    button {
+        width: 100%;
+        border: 0;
+        background: black;
+        color: white;
     }
 }

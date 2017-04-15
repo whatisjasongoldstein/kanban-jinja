@@ -1,17 +1,22 @@
 <h1 class="c-board-name">{{ board.name }}</h1>
 <ul class="c-board">
     {% for state in board.states %}
-    <li class="c-column">
+    <li class="c-column js-state" data-id="{{ state.id }}">
         <h2>{{ state.name }}</h2>
         <ul class="items">
-            {% for task in state.task_set %}
-            <li>
-                <div class="c-card">
-                    {{ task.name }}
-                </div>
+            {% for task in state.tasks %}
+            <li class="c-card" data-pk="{{ task.id }}">
+                <p class="title">{{ task.name }}</p>
+                <p>{{ task.description }}</p>
             </li>
             {% endfor %}
         </ul>
     </li>
     {% endfor %}
 </ul>
+
+<form class="c-new-task js-new-task">
+    <input type="text" name="name" placeholder="Name" required="1">
+    <textarea name="description" cols="30" rows="10" placeholder="Description"></textarea>
+    <button class="c-btn">Save</button>
+</form>

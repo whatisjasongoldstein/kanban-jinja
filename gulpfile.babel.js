@@ -53,21 +53,22 @@ gulp.task("js", ["templates"], () => {
     'bower_components/morphdom/dist/morphdom-umd.min.js',
     'assets/templates.js',
     'bower_components/nunjucks/browser/nunjucks-slim.min.js',
+    'frontend/js/board.js',
   ])
   .pipe(concat('app.js'))
   .pipe(gulp.dest(outdir))
 })
 
 gulp.task("templates", () => {
-    return gulp.src('frontend/templates/components/*.html')
-        .pipe(nunjucks.precompile({
-            name: function(f) {
-                return `components\/${f.relative}`;
-            }
-        }))
-        .pipe(concat('templates.js'))
-        .pipe(gulp.dest(`${outdir}`))
-})
+  return gulp.src('frontend/templates/components/*.html')
+      .pipe(nunjucks.precompile({
+          name: function(f) {
+              return `components\/${f.relative}`;
+          }
+      }))
+      .pipe(concat('templates.js'))
+      .pipe(gulp.dest(`${outdir}`))
+});
 
 
 gulp.task('watch', function() {

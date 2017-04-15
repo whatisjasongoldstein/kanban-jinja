@@ -1,4 +1,5 @@
-from rest_framework import serializers
+from rest_framework import serializers, viewsets
+from rest_framework.routers import DefaultRouter
 
 from .models import Board, State, Task
 
@@ -16,6 +17,7 @@ class TaskSerializer(serializers.ModelSerializer):
     class Meta:
         model = Task
         fields = (
+            "id",
             "name",
             "description",
             "state",
@@ -25,11 +27,11 @@ class TaskSerializer(serializers.ModelSerializer):
 
 class StateSerializer(serializers.ModelSerializer):
     url = serializers.CharField(source='get_absolute_url', read_only=True)
-    task_set = TaskSerializer(many=True, read_only=True)
+    tasks = TaskSerializer(many=True, read_only=True, source="task_set")
 
     class Meta:
         model = State
-        fields = ("id", 'url', "board", "name", "position", "task_set", )
+        fields = ("id", 'url', "board", "name", "position", "tasks", )
 
 
 class FullBoardSerializer(serializers.ModelSerializer):
@@ -40,3 +42,4 @@ class FullBoardSerializer(serializers.ModelSerializer):
         model = Board
         fields = ("name", "id", "url", "states")
         depth = 3
+

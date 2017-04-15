@@ -4,7 +4,7 @@
     <div class="a-kanban-board" id="board">
         {% include "components/board.html" %}
     </div>
-    <script type="text/json" data-context-for="board">
+    <script type="text/json" data-context-for="board" id="board-data">
         {{ all|safe }}
     </script>
 {% endblock content %}
