@@ -8,6 +8,9 @@
             <li class="c-card" data-pk="{{ task.id }}">
                 <p class="title">{{ task.name }}</p>
                 <p>{{ task.description }}</p>
+                {% if task.id %}
+                    <button class="js-delete" data-id="{{ task.id }}">&times;</button>
+                {% endif %}
             </li>
             {% endfor %}
         </ul>

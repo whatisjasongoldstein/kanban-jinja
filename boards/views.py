@@ -1,9 +1,11 @@
 import json
 from django.shortcuts import render, get_object_or_404
 from rest_framework.renderers import JSONRenderer
+from rest_framework import authentication, permissions, viewsets, filters
+from rest_framework.routers import DefaultRouter
 
 from .models import Board, State, Task
-from .api import BoardSerializer, FullBoardSerializer
+from .api import BoardSerializer, FullBoardSerializer, TaskSerializer
 
 
 def render_json(serialized_data):
@@ -28,3 +30,16 @@ def board(request, board_id):
         "board": FullBoardSerializer(board).data,
         "all": render_json(FullBoardSerializer(board)),
     })
+
+
+class TaskViewSet(viewsets.ModelViewSet):
+    queryset = Task.objects.all()
+    serializer_class = TaskSerializer
+
+    def perform_create(self, serializer):
+        if serializer.is_valid():
+            serializer.validated_data["creator"] = self.request.user
+        return super().perform_create(serializer)
+
+router = DefaultRouter()
+router.register(r'tasks', TaskViewSet)

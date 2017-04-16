@@ -89,6 +89,33 @@
                 self.createTask(data);
                 self.render();
             });
+
+            this.$app.on("click tap", ".js-delete", function(e){
+                var task = self.getTaskById(this.dataset.id);
+                self.deleteTask(task);
+            });
+        },
+
+        getStateById: function(id) {
+            let states = this.data["states"].filter(function(s){
+                return s.id === id;
+            });
+            return states[0];
+        },
+
+        getTaskById: function(id) {
+            let tasks = this.data["states"].map(function(s){
+                let matches = s.tasks.filter(function(t){
+                    return t.id === id;
+                });
+                if (matches.length) {
+                    return matches[0];
+                }
+                return null;
+            }).filter(function(i){
+                return i !== null;
+            });
+            return tasks[0];
         },
 
         createTask: function(data) {
@@ -110,11 +137,27 @@
 
         saveTask: function(data) {
             var self = this;
-            var req = $.post("/endpoint/", data);
-            req.then(function(){
-                debugger;
+            var req = $.post("/api/tasks/", data);
+            req.then(function(resp){
+                data.id = resp.id;
+                self.render();
             }).fail(function(){
                 console.error("Could not save.");
+            });
+        },
+
+        deleteTask: function(task) {
+            let self = this;
+
+            var req = $.ajax({
+                url: `/api/tasks/${ task.id }/`,
+                method: "DELETE",
+            }).then(function(resp){
+                let state = self.getStateById(task.state);
+                state.tasks.pop(state.tasks.indexOf(task));
+                self.render();
+            }).fail(function(){
+                console.error("Could not delete");
             });
         },
 
@@ -124,7 +167,7 @@
          */
         render: function() {
             var html = nunjucks.render("components/board.html", {
-                board: this.data
+                board: this.data,
             });
             lazyRender(this.$app[0], html);
         },
