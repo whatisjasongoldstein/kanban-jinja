@@ -43,11 +43,14 @@
      * it should become, apply morphdom
      * to make the incremental DOM changes.
      */
-    function lazyRender(el, html) {
+    function lazyRender(el, html, callback) {
         let cloneEl = el.cloneNode();
         cloneEl.innerHTML = html;
         window.requestAnimationFrame(function(){
             morphdom(el, cloneEl);
+            if (callback) {
+                callback();
+            }
         });
     };
 
@@ -94,6 +97,12 @@
                 var task = self.getTaskById(this.dataset.id);
                 self.deleteTask(task);
             });
+
+            this.bindSortable();
+
+            this.$app.find(".js-sortable").on("sortupdate", function(e){
+                self.updatePositions();
+            });
         },
 
         getStateById: function(id) {
@@ -101,6 +110,28 @@
                 return s.id === id;
             });
             return states[0];
+        },
+
+        bindSortable: function() {
+            sortable('.js-sortable', 'destroy');
+            
+            sortable('.js-sortable', {
+              placeholderClass: 'c-task-placeholder',
+              connectWith: ".js-sortable",
+            });
+        },
+
+        getAllTasks: function() {
+            let tasks = [];
+            for (var i = 0; i < this.data.states.length; i++) {
+                tasks = tasks.concat(this.data.states[i].tasks);
+            }
+            return tasks;
+        },
+
+        updatePositions: function() {
+            let tasks = this.getAllTasks();
+            console.log(arguments);
         },
 
         getTaskById: function(id) {
@@ -166,10 +197,15 @@
          * template and a context build from the current state.
          */
         render: function() {
-            var html = nunjucks.render("components/board.html", {
+            let self = this;
+
+            let html = nunjucks.render("components/board.html", {
                 board: this.data,
             });
-            lazyRender(this.$app[0], html);
+
+            lazyRender(this.$app[0], html, function(){
+                self.bindSortable();
+            });
         },
     }
 

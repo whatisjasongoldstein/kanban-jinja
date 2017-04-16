@@ -53,6 +53,7 @@ gulp.task("js", ["templates"], () => {
     'bower_components/morphdom/dist/morphdom-umd.min.js',
     'assets/templates.js',
     'bower_components/nunjucks/browser/nunjucks-slim.min.js',
+    'bower_components/html5sortable/dist/html.sortable.min.js',
     'frontend/js/board.js',
   ])
   .pipe(concat('app.js'))

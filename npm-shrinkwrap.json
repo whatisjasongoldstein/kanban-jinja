@@ -1356,6 +1356,11 @@
       "resolved": "https://registry.npmjs.org/hosted-git-info/-/hosted-git-info-2.2.0.tgz",
       "dev": true
     },
+    "html5sortable": {
+      "version": "0.4.5",
+      "from": "html5sortable@latest",
+      "resolved": "https://registry.npmjs.org/html5sortable/-/html5sortable-0.4.5.tgz"
+    },
     "http-signature": {
       "version": "1.1.1",
       "from": "http-signature@>=1.1.0 <1.2.0",
