@@ -222,14 +222,13 @@
 
         cleanData: function() {
             // Move mismatched tasks
-            // TODO: this part doesn't work.
             var self = this;
             this.data.states.forEach(function(state){
                 let mismatched = state.tasks.filter((task) => task.state !== state.id);
                 mismatched.forEach(function(task){
-                    state.tasks.pop(task);
+                    state.tasks = state.tasks.filter((t) => t.id !== task.id);
                     let newState = self.getStateById(task.state);
-                    newState.tasks.push(state);
+                    newState.tasks.push(task);
                 });
             });
             
