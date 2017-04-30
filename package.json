@@ -9,6 +9,7 @@
   "author": "Jason Goldstein",
   "license": "ISC",
   "dependencies": {
+    "coreapi": "^0.1.0",
     "html5sortable": "^0.4.5",
     "jquery": "^3.1.1"
   },

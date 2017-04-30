@@ -49,11 +49,11 @@ gulp.task('css', function() {
 
 gulp.task("js", ["templates"], () => {
   return gulp.src([
-    'bower_components/jquery/dist/jquery.min.js',
-    'bower_components/morphdom/dist/morphdom-umd.min.js',
+    'frontend/node_modules/jquery/dist/jquery.min.js',
+    'frontend/node_modules/morphdom/dist/morphdom-umd.min.js',
     'assets/templates.js',
-    'bower_components/nunjucks/browser/nunjucks-slim.min.js',
-    'bower_components/html5sortable/dist/html.sortable.min.js',
+    'frontend/node_modules/nunjucks/browser/nunjucks-slim.min.js',
+    'frontend/node_modules/html5sortable/dist/html.sortable.min.js',
     'frontend/js/board.js',
   ])
   .pipe(concat('app.js'))
