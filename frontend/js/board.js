@@ -142,45 +142,12 @@
                 let state = $el.closest(".js-state").attr("data-id");
                 let position = $el.index();
                 let changed = (task.state !== state || task.position !== position);
-                task.position = position;                
+                task.position = position;
                 task.state = state;
                 return changed;
             }.bind(this));
 
-            this.reconcileData();
             tasksChanged.map( (task) => this.saveTask(task));
-        },
-
-        // Ensure tasks are in the correct state.
-        // This is required for rendering.
-        reconcileData: function() {
-            // TODO: this part is all fucked up.
-            
-            // Convert states list into a key/value map
-            let statesMap = (function(states){
-                let data = {};
-                for (var i = 0; i < states.length; i++) {
-                    data[states[i].id] = states[i];
-                }
-                return data;
-            })(this.data.states);
-
-            for (var i = 0; i < this.data.states.length; i++) {
-                let state = this.data.states[i];                
-                state.tasks.filter((task) => {
-                    if (task.state !== state.id){
-                        // Remove from the old
-                        state.tasks.pop(task)
-
-                        // Send to new state
-                        let newState = statesMap[task.state];
-                        newState.tasks.push(task);
-
-                        // Fix sort order
-                        // newState.tasks = newState.tasks.sort();
-                    };
-                });
-            }
         },
 
         getTaskById: function(id) {
@@ -253,12 +220,34 @@
             });
         },
 
+        cleanData: function() {
+            // Move mismatched tasks
+            // TODO: this part doesn't work.
+            var self = this;
+            this.data.states.forEach(function(state){
+                let mismatched = state.tasks.filter((task) => task.state !== state.id);
+                mismatched.forEach(function(task){
+                    state.tasks.pop(task);
+                    let newState = self.getStateById(task.state);
+                    newState.tasks.push(state);
+                });
+            });
+            
+            // Sort tasks
+            for (var i = 0; i < this.data.states.length; i++) {
+                let state = this.data.states[i];
+                state.tasks = state.tasks.sort((a, b) => a.position - b.position);
+            }
+        },
+
         /**
          * Render the component using the nunjuck's
          * template and a context build from the current state.
          */
         render: function() {
             let self = this;
+
+            this.cleanData();
 
             let html = nunjucks.render("components/board.html", {
                 board: this.data,
