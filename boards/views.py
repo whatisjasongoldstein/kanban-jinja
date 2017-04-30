@@ -3,6 +3,7 @@ from django.shortcuts import render, get_object_or_404
 from rest_framework.renderers import JSONRenderer
 from rest_framework import authentication, permissions, viewsets, filters
 from rest_framework.routers import DefaultRouter
+from django.contrib.auth.decorators import login_required
 
 from .models import Board, State, Task
 from .api import BoardSerializer, FullBoardSerializer, TaskSerializer
@@ -17,6 +18,7 @@ def render_json(serialized_data):
     return json.dumps(json.loads(data), indent=2)
 
 
+@login_required
 def index(request):
     boards =  BoardSerializer(Board.objects.all(), many=True).data
     return render(request, "index.html", {
@@ -24,6 +26,7 @@ def index(request):
     })
 
 
+@login_required
 def board(request, board_id):
     board = get_object_or_404(Board, id=board_id)
     return render(request, "app-board.html", {

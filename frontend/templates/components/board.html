@@ -5,7 +5,7 @@
         <h2>{{ state.name }}</h2>
         <ul class="items js-sortable">
             {% for task in state.tasks %}
-            <li class="c-card" data-pk="{{ task.id }}">
+            <li class="c-card js-card" data-id="{{ task.id }}">
                 <p class="title">{{ task.name }}</p>
                 <p>{{ task.description }}</p>
                 {% if task.id %}
